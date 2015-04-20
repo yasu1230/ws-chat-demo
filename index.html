@@ -81,9 +81,9 @@ alert(name);
           }
           // チャットボックスの前にユーザ名を表示
           $('#user-name').append(myName);
-
+try{
       socketio.emit("connected", myName);
-
+} catch(e){alert(e);}
 
           $('#name-setting-dialog').modal('hide');
       });
