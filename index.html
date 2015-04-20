@@ -112,6 +112,7 @@
 
       $('#message').on('blur', function(){
           socketio.emit("join", myName);
+          socketio.emit("message", myName);
       });
 
       $('#name-setting-close').on('click', function(){

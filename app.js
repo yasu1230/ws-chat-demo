@@ -54,4 +54,10 @@ io.sockets.on("connection", function (sock) {
       io.sockets.emit("defect", {value: msg});
     }
   });
+
+  // 接続開始カスタムイベント(接続元ユーザを保存し、他ユーザへ通知)
+  sock.on("message", function (data) {
+    io.sockets.emit("message", data);
+  });
+
 });
