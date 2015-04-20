@@ -22,11 +22,12 @@ var socket = require("socket.io");
 // サーバーでSocket.IOを使える状態にする
 var io = socket.listen(server);
 
+var userHash = {};
 io.sockets.on("connection", function (sock) {
 
   // 接続開始カスタムイベント(接続元ユーザを保存し、他ユーザへ通知)
   sock.on("connected", function (name) {
-    var msg = name + "が入室しました";
+    var msg = name + "さんが入室しました";
     userHash[sock.id] = name;
     io.sockets.emit("publish", {value: msg});
   });
@@ -39,10 +40,9 @@ io.sockets.on("connection", function (sock) {
   // 接続終了組み込みイベント(接続元ユーザを削除し、他ユーザへ通知)
   sock.on("disconnect", function () {
     if (userHash[sock.id]) {
-      var msg = userHash[sock.id] + "が退出しました";
+      var msg = userHash[sock.id] + "さんが退出しました";
       delete userHash[sock.id];
       io.sockets.emit("publish", {value: msg});
     }
   });
 });
-

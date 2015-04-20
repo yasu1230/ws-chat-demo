@@ -1,25 +1,37 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="UTF-8">
-  <title>チャットサンプル</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>WebSocket チャットデモ</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        body {padding-top: 60px;}
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Chat Demo</a>
+          <a class="navbar-brand" href="#">WebSocket チャットデモ</a>
         </div>
       </div>
     </nav>
 
-    <div class="container">
+    <div id="chat-area" class="container">
+      <form>
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" id="user-name"><span class="glyphicon glyphicon-user"></span></span>
+            <input type="text" class="form-control" id="message" placeholder="メッセージを入力してください。">
+          </div>
+        </div>
+      </form>
+      <ul id="chat-history" class="unstyled row-fluid"></ul>
     </div>
 
     <div id="name-setting-dialog" class="modal fade">
@@ -44,10 +56,61 @@
 
 <script type="text/javascript">
   $(function(){
-      $('#name-setting-dialog').modal('show');
+      var myName;
+
+      var ws = io.connect(location.origin);
+      console.log(location.origin);
+
 
       $('#name-setting-close').on('click', function(){
+          myName = $('#name').val();
+          if(userName.length == 0){
+              // ユーザ名をランダムに生成
+              myName = 'ゲスト' + Math.floor(Math.random() * 100);
+          }
+          // チャットボックスの前にユーザ名を表示
+          $('#user-name').append(myName);
+
+          $('#name-setting-dialog').modal('hide');
       });
+
+      // 名前入力用ダイアログの表示
+      $('#name-setting-dialog').modal('show');
+
+
+/*
+// 1.イベントとコールバックの定義
+    var socketio = io.connect(location.origin);
+    console.log(location.origin);
+
+    socketio.on("connected", function(name) {});
+    socketio.on("publish", function (data) { addMessage(data.value); });
+    socketio.on("disconnect", function () {});
+
+    // 2.イベントに絡ませる関数の定義
+    function start(name) {
+      socketio.emit("connected", name);
+    }
+
+    function publishMessage() {
+      var textInput = document.getElementById('msg_input');
+      var msg = "[" + myName + "] " + textInput.value;
+      socketio.emit("publish", {value: msg});
+      textInput.value = '';
+    }
+
+    function addMessage (msg) {
+      var domMeg = document.createElement('div');
+      domMeg.innerHTML = new Date().toLocaleTimeString() + ' ' + msg;
+      msgArea.appendChild(domMeg);
+    }
+
+    // 3.開始処理
+    var msgArea = document.getElementById("msg");
+    var myName = Math.floor(Math.random()*100) + "さん";
+    addMessage("貴方は" + myName + "として入室しました");
+    start(myName);
+*/
   });
 </script>
 </body>
