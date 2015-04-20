@@ -59,6 +59,12 @@
       var ws = io.connect(location.origin);
       console.log(location.origin);
 
+      ws.on('error', function(){
+          console.log('error');
+      });
+
+      $('#name-setting-close').on('click', function(){
+      });
 
       $('#name-setting-close').on('click', function(){
           myName = $('#name').val();
