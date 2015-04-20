@@ -62,10 +62,15 @@ try{
 } catch(e){alert(e);}
 
       socketio.onerror = function(){
-          console.log('error');
+          alert('error');
       };
 
       socketio.on("connected", function(name) {
+alert(name);
+          $('#chat-history').text(name);
+      });
+
+      socketio.on("publish", function(name) {
 alert(name);
           $('#chat-history').text(name);
       });
