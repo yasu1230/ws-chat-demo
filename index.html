@@ -56,12 +56,17 @@
   $(function(){
       var myName;
 
-      var ws = io.connect(location.origin);
+      var socketio = io.connect(location.origin);
       console.log(location.origin);
 
-      ws.onerror = function(){
+      socketio.onerror = function(){
           console.log('error');
       };
+
+      socketio.on("connected", function(name) {
+          $('#chat-history').text(name);
+      });
+
 
       $('#message').on('blur', function(){
           alert('test');
@@ -75,6 +80,9 @@
           }
           // チャットボックスの前にユーザ名を表示
           $('#user-name').append(myName);
+
+      socketio.emit("connected", myName);
+
 
           $('#name-setting-dialog').modal('hide');
       });
