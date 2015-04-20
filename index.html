@@ -64,6 +64,7 @@
       };
 
       socketio.on("connected", function(name) {
+alert(name);
           $('#chat-history').text(name);
       });
 
