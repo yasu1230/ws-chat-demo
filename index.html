@@ -29,7 +29,7 @@
           <input type="text" class="form-control" id="message" placeholder="メッセージを入力してください。">
         </div>
       </div>
-      <ul id="chat-history" class="unstyled row-fluid"></ul>
+      <div id="chat-history"></div>
     </div>
 
     <div id="name-setting-dialog" class="modal fade">
@@ -56,28 +56,58 @@
   $(function(){
       var myName;
 
-try{
       var socketio = io.connect(location.origin.replace(/^http/, 'ws'));
-      console.log(location.origin.replace(/^http/, 'ws'));
-} catch(e){alert(e);}
 
       socketio.onerror = function(){
           alert('error');
       };
 
-      socketio.on("connected", function(name) {
-alert(name);
-          $('#chat-history').text(name);
-      });
+      function join(){
+          var data = {};
+          data.type = 'join';
+          published(data);
+      }
 
-      socketio.on("publish", function(data) {
-alert(data.value);
-          $('#chat-history').text(data.value);
+      function chat(msg){
+          var data = {};
+          data.type = 'chat';
+          data.value = msg;
+          published(data);
+      }
+
+      function defect(){
+          var data = {};
+          data.type = 'defect';
+          published(data);
+      }
+
+      function published(data){
+          data.name = myName;
+          socketio.emit("published", data);
+      }
+
+
+
+      socketio.on("published", function(data) {
+
+          var $span = $('<span>').addClass('datetime');
+          var $item = $('<div>');
+          switch(data.type){
+              case 'join':
+                  break;
+              case 'defect':
+                  break;
+              case 'chat':
+                  $span.text(data.datetime);
+                  $item.addClass('well').append($span).text(data.value);
+                  break;
+          }
+          $('#chat-history').prepend($item);
       });
 
 
       $('#message').on('blur', function(){
-      socketio.emit("connected", myName);
+          socketio.emit("join", myName);
       });
 
       $('#name-setting-close').on('click', function(){
@@ -88,9 +118,7 @@ alert(data.value);
           }
           // チャットボックスの前にユーザ名を表示
           $('#user-name').append(myName);
-try{
-      socketio.emit("connected", myName);
-} catch(e){alert(e);}
+          socketio.emit("join", myName);
 
           $('#name-setting-dialog').modal('hide');
       });

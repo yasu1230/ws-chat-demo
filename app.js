@@ -35,7 +35,7 @@ var userHash = {};
 io.sockets.on("connection", function (sock) {
 
   // 接続開始カスタムイベント(接続元ユーザを保存し、他ユーザへ通知)
-  sock.on("connected", function (name) {
+  sock.on("join", function (name) {
     var msg = name + "さんが入室しました";
     userHash[sock.id] = name;
     io.sockets.emit("publish", {value: msg});
@@ -54,4 +54,12 @@ io.sockets.on("connection", function (sock) {
       io.sockets.emit("publish", {value: msg});
     }
   });
+
+  // メッセージ送信カスタムイベント
+  sock.on("published", function (data) {
+    data.datetime = new Date();
+   io.sockets.emit("published", data);
+  });
+
+
 });
