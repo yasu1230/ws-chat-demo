@@ -83,7 +83,7 @@
 
       function published(data){
           data.name = myName;
-          socketio.emit("published", data);
+          socketio.emit("publish", data);
       }
 
       socketio.on("join", function(data) {
@@ -116,7 +116,7 @@
 
       $('#message').on('blur', function(){
           socketio.emit("join", myName);
-          socketio.emit("message", myName);
+          join();
       });
 
       $('#name-setting-close').on('click', function(){

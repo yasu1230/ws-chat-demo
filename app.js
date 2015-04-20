@@ -56,7 +56,7 @@ io.sockets.on("connection", function (sock) {
   });
 
   // 接続開始カスタムイベント(接続元ユーザを保存し、他ユーザへ通知)
-  sock.on("message", function (data) {
+  sock.on("publish", function (data) {
     io.sockets.emit("message", data);
   });
 
