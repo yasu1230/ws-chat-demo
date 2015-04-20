@@ -22,6 +22,7 @@ var socket = require("socket.io");
 // サーバーでSocket.IOを使える状態にする
 var io = socket.listen(server);
 
+/*
 io.configure('production', function(){
   io.set('transports', [
     'websocket',
@@ -29,7 +30,7 @@ io.configure('production', function(){
     'xhr-polling'
   ]);
 });
-
+*/
 var userHash = {};
 io.sockets.on("connection", function (sock) {
 
