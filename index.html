@@ -90,6 +90,10 @@
           console.log(data);
       });
 
+      socketio.on("message", function(data) {
+          console.log(data);
+      });
+
       socketio.on("published", function(data) {
 
           var $span = $('<span>').addClass('datetime');
