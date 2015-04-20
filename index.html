@@ -72,7 +72,7 @@ alert(name);
 
 
       $('#message').on('blur', function(){
-          alert('test');
+      socketio.emit("connected", myName);
       });
 
       $('#name-setting-close').on('click', function(){
