@@ -89,7 +89,7 @@
 
 
       socketio.on("published", function(data) {
-
+console.log(data);
           var $span = $('<span>').addClass('datetime');
           var $item = $('<div>');
           switch(data.type){
