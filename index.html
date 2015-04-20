@@ -70,9 +70,9 @@ alert(name);
           $('#chat-history').text(name);
       });
 
-      socketio.on("publish", function(name) {
-alert(name);
-          $('#chat-history').text(name);
+      socketio.on("publish", function(data) {
+alert(data.value);
+          $('#chat-history').text(data.value);
       });
 
 
