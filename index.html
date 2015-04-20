@@ -59,7 +59,7 @@
       var ws = io.connect(location.origin);
       console.log(location.origin);
 
-      ws.on('error', function(){
+      ws.onerror = function(){
           console.log('error');
       });
 
