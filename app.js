@@ -38,37 +38,20 @@ io.sockets.on("connection", function (sock) {
   sock.on("join", function (name) {
     var msg = name + "さんが入室しました";
     userHash[sock.id] = name;
-    io.sockets.emit("publish", {value: msg});
+    io.sockets.emit("join", {value: msg});
   });
 
   // メッセージ送信カスタムイベント
-  sock.on("publish", function (data) {
-    io.sockets.emit("publish", {value:data.value});
+  sock.on("chat", function (data) {
+    io.sockets.emit("chat", {value:data.value});
   });
 
   // 接続終了組み込みイベント(接続元ユーザを削除し、他ユーザへ通知)
-  sock.on("disconnect", function () {
+  sock.on("defect", function () {
     if (userHash[sock.id]) {
       var msg = userHash[sock.id] + "さんが退出しました";
       delete userHash[sock.id];
-      io.sockets.emit("publish", {value: msg});
+      io.sockets.emit("defect", {value: msg});
     }
   });
-
-  // メッセージ送信カスタムイベント
-  sock.on("published", function (data) {
-//    data.datetime = new Date();
-    switch(data.type)
-    {
-        case 'join':
-            data,value = data,name + "さんが入室しました";
-            break;
-        case 'defect':
-            data,value = data,name + "さんが退室しました";
-            break;
-    }
-    io.sockets.emit("published", data);
-  });
-
-
 });

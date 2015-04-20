@@ -86,10 +86,12 @@
           socketio.emit("published", data);
       }
 
-
+      socketio.on("join", function(data) {
+          console.log(data);
+      });
 
       socketio.on("published", function(data) {
-console.log(data);
+
           var $span = $('<span>').addClass('datetime');
           var $item = $('<div>');
           switch(data.type){
@@ -104,7 +106,7 @@ console.log(data);
                   $item.addClass('well').append($span).text(data.value);
                   break;
           }
-          $('#chat-history').prepend($item);
+          $('#chat-history').text($item);
       });
 
 
