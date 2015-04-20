@@ -58,7 +58,16 @@ io.sockets.on("connection", function (sock) {
   // メッセージ送信カスタムイベント
   sock.on("published", function (data) {
     data.datetime = new Date();
-   io.sockets.emit("published", data);
+    switch(data.type)
+    {
+        case 'join':
+            data,value = data,name + "さんが入室しました";
+            break;
+        case 'defect':
+            data,value = data,name + "さんが退室しました";
+            break;
+    }
+    io.sockets.emit("published", data);
   });
 
 

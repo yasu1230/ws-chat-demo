@@ -94,6 +94,8 @@
           var $item = $('<div>');
           switch(data.type){
               case 'join':
+                  $span.text(data.datetime);
+                  $item.addClass('well').append($span).text(data.value);
                   break;
               case 'defect':
                   break;
@@ -118,7 +120,7 @@
           }
           // チャットボックスの前にユーザ名を表示
           $('#user-name').append(myName);
-          socketio.emit("join", myName);
+          join();
 
           $('#name-setting-dialog').modal('hide');
       });
