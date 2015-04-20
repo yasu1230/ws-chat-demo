@@ -57,7 +57,7 @@ io.sockets.on("connection", function (sock) {
 
   // メッセージ送信カスタムイベント
   sock.on("published", function (data) {
-    data.datetime = new Date();
+//    data.datetime = new Date();
     switch(data.type)
     {
         case 'join':
