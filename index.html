@@ -56,14 +56,16 @@
       var myName;
 
       var socketio = io.connect(location.origin.replace(/^http/, 'ws'));
+      console.log(location.origin.replace(/^http/, 'ws'));
 
-
-      var ws = new WebSocket(location.origin.replace(/^http/, 'ws'));
-      ws.onmessage = function (event) {
-        var li = document.createElement('li');
-        li.innerHTML = JSON.parse(event.data);
-        document.querySelector('#pings').appendChild(li);
+      socketio.onerror = function(){
+          console.log('error');
       };
+
+      socketio.on("connected", function(name) {
+alert(name);
+          $('#chat-history').text(name);
+      });
 
 
       $('#message').on('blur', function(){
