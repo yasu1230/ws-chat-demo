@@ -117,8 +117,10 @@
       });
 
       $('#message-box').on('blur', function(){
-          if($('#message-box').val().length > 0)
+          if($('#message-box').val().length > 0){
               chat($('#message-box').val());
+              $('#message-box').val('');
+          }
       });
 
       $('#name-setting-close').on('click', function(){
