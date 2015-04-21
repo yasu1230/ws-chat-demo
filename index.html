@@ -97,20 +97,21 @@
                                      .attr('aria-label', 'Close')
                                      .html($('<span />').attr('aria-hidden', 'true').text('×'));
 
-          var $time = $('<strong />').text(moment(data.time).format('hh:mm:ss'));
+          var $name = $('<strong />').text(data.name);
+          var $time = $('<small />').text(moment(data.time).format('hh:mm:ss'));
           var $item = $('<div />');
           switch(data.type){
               case 'join':
                   $item.addClass('alert').addClass('alert-info')
-                       .append($time).append($message).append($button);
+                       .append($name).append($message).append($time).append($button);
                   break;
               case 'defect':
                   $item.addClass('alert').addClass('alert-warning')
-                       .append($time).append($message).append($button);
+                       .append($name).append($message).append($time).append($button);
                   break;
               case 'chat':
                   $item.addClass('well').addClass('well-sm')
-                       .append($time).append($message);
+                       .append($name).append($message).append($time);
                   break;
           }
           $('#chat-history').prepend($item);
