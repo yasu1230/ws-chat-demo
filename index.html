@@ -91,10 +91,6 @@
           socketio.emit("publish", data);
       }
 
-      socketio.on("join", function(data) {
-          console.log(data);
-      });
-
       socketio.on("message", function(data) {
           console.log(data);
 
@@ -104,7 +100,7 @@
                                      .attr('aria-label', 'Close')
                                      .html($('<span />').attr('aria-hidden', 'true').text('×'));
 
-          var $time = $('<strong />').text(moment(data.time).fromNow());
+          var $time = $('<strong />').text(moment(data.time).format('hh:mm:ss'));
           var $item = $('<div />');
           switch(data.type){
               case 'join':
@@ -123,32 +119,9 @@
           $('#chat-history').append($item);
       });
 
-      socketio.on("published", function(data) {
-
-
-
-
-
-          var $span = $('<span>').addClass('datetime');
-          var $item = $('<div>');
-          switch(data.type){
-              case 'join':
-                  $span.text(data.datetime);
-                  $item.addClass('well').append($span).text(data.value);
-                  break;
-              case 'defect':
-                  break;
-              case 'chat':
-                  $span.text(data.datetime);
-                  $item.addClass('well').append($span).text(data.value);
-                  break;
-          }
-          $('#chat-history').text($item);
-      });
-
-
       $('#message').on('blur', function(){
-          join();
+          if($('#message-box').val().length > 0)
+              chat($('#message-box').val());
       });
 
       $('#name-setting-close').on('click', function(){
