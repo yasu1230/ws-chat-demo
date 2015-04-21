@@ -94,7 +94,7 @@
       socketio.on("message", function(data) {
           console.log(data);
 
-          var $message = $('<span />').addClass('message').text(data.value);
+          var $message = $('<span />').addClass('message').text('　' + data.value);
           var $button = $('<button />').addClass('close')
                                      .attr('data-dismiss', 'alert')
                                      .attr('aria-label', 'Close')
@@ -116,7 +116,7 @@
                        .append($time).append($message);
                   break;
           }
-          $('#chat-history').append($item);
+          $('#chat-history').prepend($item);
       });
 
       $('#message-box').on('blur', function(){
