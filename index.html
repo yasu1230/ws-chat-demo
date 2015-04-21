@@ -117,10 +117,17 @@
           $('#chat-history').prepend($item);
       });
 
-      $('#message-box').on('blur', function(){
-          if($('#message-box').val().length > 0){
-              chat($('#message-box').val());
-              $('#message-box').val('');
+$(document).on("keypress", "input:not(.allow_submit)", function(event) {
+    return event.which !== 13;
+  });
+
+
+      $('#message-box').on('keypress', function(event){
+          if(event.which === 13){
+              if($('#message-box').val().length > 0){
+                  chat($('#message-box').val());
+                  $('#message-box').val('');
+              }
           }
       });
 
