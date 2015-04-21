@@ -27,7 +27,7 @@
       <div class="form-group">
         <div class="input-group">
           <span class="input-group-addon" id="user-name"><span class="glyphicon glyphicon-user"></span></span>
-          <input type="text" class="form-control" id="message" placeholder="メッセージを入力してください。">
+          <input type="text" class="form-control" id="message-box" placeholder="メッセージを入力してください。">
         </div>
       </div>
       <div id="chat-history">
@@ -119,7 +119,7 @@
           $('#chat-history').append($item);
       });
 
-      $('#message').on('blur', function(){
+      $('#message-box').on('blur', function(){
           if($('#message-box').val().length > 0)
               chat($('#message-box').val());
       });
