@@ -100,7 +100,7 @@
           var $button = $('<button />').addClass('close')
                                      .attr('data-dismiss', 'alert')
                                      .attr('aria-label', 'Close')
-                                     .html($('span').attr('aria-hidden', 'true').text('&times;'));
+                                     .html($('<span />').attr('aria-hidden', 'true').text('&times;'));
 
           var $time = $('<strong />').text(data.time);
           var $item = $('<div />');
