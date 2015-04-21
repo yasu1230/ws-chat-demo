@@ -98,7 +98,7 @@
                                      .html($('<span />').attr('aria-hidden', 'true').text('×'));
 
           var $name = $('<strong />').text(data.name);
-          var $time = $('<small />').text(moment(data.time).format('hh:mm:ss'));
+          var $time = $('<small />').text('　' + moment(data.time).format('hh:mm:ss'));
           var $item = $('<div />');
           switch(data.type){
               case 'join':
