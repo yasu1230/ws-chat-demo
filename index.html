@@ -96,6 +96,7 @@
       socketio.on("message", function(data) {
           console.log(data);
 
+          var $message = $('<span />').addClass('message').text(data.value);
           var $button = $('<button />').addClass('close')
                                      .attr('data-dismiss', 'alert')
                                      .attr('aria-label', 'Close')
@@ -106,15 +107,15 @@
           switch(data.type){
               case 'join':
                   $item.addClass('alert').addClass('alert-warning')
-                       .append($time).text(' ' + data.value).append($button);
+                       .append($time).append($message).append($button);
                   break;
               case 'defect':
                   $item.addClass('alert').addClass('alert-warning')
-                       .append($time).text(' ' + data.value).append($button);
+                       .append($time).append($message).append($button);
                   break;
               case 'chat':
                   $item.addClass('alert').addClass('alert-warning')
-                       .append($time).text(' ' + data.value).append($button);
+                       .append($time).append($message).append($button);
                   break;
           }
           $('#chat-history').append($item);
@@ -145,7 +146,6 @@
 
 
       $('#message').on('blur', function(){
-          socketio.emit("join", myName);
           join();
       });
 
