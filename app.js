@@ -70,4 +70,15 @@ io.sockets.on("connection", function (sock) {
     io.sockets.emit("message", data);
   });
 
+  sock.on('disconnect', function(data) {
+    var data = {};
+    data.type = 'defect';
+    data.time = new Date().getTime();
+    if (userHash[sock.id]) {
+      data.name = userHash[sock.id];
+      data.value = userHash[sock.id] + "さんが退室しました";
+      delete userHash[sock.id];
+      io.sockets.emit("message", data);
+    }
+  });
 });
