@@ -96,13 +96,13 @@
       socketio.on("message", function(data) {
           console.log(data);
 
-          var $button = $('<button>').addClass('close')
+          var $button = $('<button />').addClass('close')
                                      .attr('data-dismiss', 'alert')
                                      .attr('aria-label', 'Close')
                                      .html($('span').attr('aria-hidden', 'true').text('&times;'));
 
-          var $time = $('<strong>').text(data.time);
-          var $item = $('<div>');
+          var $time = $('<strong />').text(data.time);
+          var $item = $('<div />');
           switch(data.type){
               case 'join':
                   $item.addClass('alert').addClass('alert-warning')
