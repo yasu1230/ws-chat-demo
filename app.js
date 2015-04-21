@@ -58,6 +58,15 @@ io.sockets.on("connection", function (sock) {
   // 接続開始カスタムイベント(接続元ユーザを保存し、他ユーザへ通知)
   sock.on("publish", function (data) {
     data.time = new Date().getTime();
+    switch(data.type)
+    {
+        case 'join':
+            data.value = data.name + "さんが入室しました。";
+            break;
+        case 'defect':
+            data.value = data.name + "さんが退室しました。";
+            break;
+    }
     io.sockets.emit("message", data);
   });
 

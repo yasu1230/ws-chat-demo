@@ -29,7 +29,10 @@
           <input type="text" class="form-control" id="message" placeholder="メッセージを入力してください。">
         </div>
       </div>
-      <div id="chat-history"></div>
+      <div id="chat-history">
+<div class="alert alert-sm alert-warning"><strong>2014/12/30 10:00:00</strong>&nbsp;あああああああああああああああああああ<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+
+</div>
     </div>
 
     <div id="name-setting-dialog" class="modal fade">
@@ -92,24 +95,36 @@
 
       socketio.on("message", function(data) {
           console.log(data);
-          var $span = $('<span>').addClass('datetime');
+
+          var $button = $('<button>').addClass('close')
+                                     .attr('data-dismiss', 'alert')
+                                     .attr('aria-label', 'Close')
+                                     .html($('span').attr('aria-hidden', 'true').text('&times;'));
+
+          var $time = $('<strong>').text(data.time);
           var $item = $('<div>');
           switch(data.type){
               case 'join':
-                  $span.text(data.datetime);
-                  $item.addClass('well').append($span).text(data.value);
+                  $item.addClass('alert').addClass('alert-warning')
+                       .append($time).text(' ' + data.value).append($button);
                   break;
               case 'defect':
+                  $item.addClass('alert').addClass('alert-warning')
+                       .append($time).text(' ' + data.value).append($button);
                   break;
               case 'chat':
-                  $span.text(data.datetime);
-                  $item.addClass('well').append($span).text(data.value);
+                  $item.addClass('alert').addClass('alert-warning')
+                       .append($time).text(' ' + data.value).append($button);
                   break;
           }
-          $('#chat-history').text($item);
+          $('#chat-history').append($item);
       });
 
       socketio.on("published", function(data) {
+
+
+
+
 
           var $span = $('<span>').addClass('datetime');
           var $item = $('<div>');
